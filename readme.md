@@ -51,3 +51,12 @@ Fully modular code, extensively commented for easy learning & contribution.
 ---
 
 ## 🧩 Project Structure
+
+whereu-tracker/
+├── app.py # Flask backend with Socket.IO
+├── templates/
+│ └── index.html # Main HTML with animated UI
+├── static/
+│ └── script.js # Frontend JS for tracking & animation
+├── README.md # You're reading it!
+└── requirements.txt # Python dependencies
