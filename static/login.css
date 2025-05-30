@@ -1,0 +1,143 @@
+/* login.css */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Outfit", sans-serif;
+}
+
+body {
+  background: url("https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=1950&q=80")
+    no-repeat center center fixed;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 0;
+}
+
+.card {
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 40px;
+  width: 350px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  color: white;
+  animation: bounceIn 1.2s ease-in-out;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-weight: 600;
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 12px;
+  outline: none;
+  background: rgba(255, 255, 255, 0.2);
+  color: rgb(255, 255, 255);
+  transition: background 0.3s ease;
+}
+
+input:focus {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(to right, #00b09b, #96c93d);
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+button:hover {
+  transform: scale(1.08);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+p {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+a {
+  color: #ffffff;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.flash-msg {
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: white;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 10px;
+  animation: fadeOut 3s forwards; /* 👈 trigger fadeout */
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}

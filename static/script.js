@@ -108,3 +108,11 @@ if (navigator.geolocation) {
     maximumAge: 0, // Do not use cached location data
   });
 }
+
+function openDeleteModal() {
+  document.getElementById("deleteModal").style.display = "flex";
+}
+
+function closeDeleteModal() {
+  document.getElementById("deleteModal").style.display = "none";
+}

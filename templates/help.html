@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🆘 Help | WhereU: Real-Time Tracker</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='help.css') }}"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="hero">
+      <h1 class="animated-text">🌍 Welcome to WhereU Help Center</h1>
+      <p>Your ultimate guide to using the real-time location tracker! 🚀</p>
+      <a href="/" class="back-button">⬅️ Back to Home</a>
+    </header>
+
+    <section class="section" id="intro">
+      <h2>📌 What is WhereU?</h2>
+      <p>
+        WhereU is a
+        <strong>real-time location tracking web application</strong> that allows
+        users to view live positions of connected users on a stunning
+        interactive map. 🗺️ <br />
+        Built with 💡 Flask, 📡 Socket.IO, and 🧭 LeafletJS, it provides instant
+        communication and location updates.
+      </p>
+    </section>
+
+    <section class="section" id="features">
+      <h2>✨ Key Features</h2>
+      <ul>
+        <li>🛰️ Live GPS-based tracking</li>
+        <li>💬 Real-time updates via WebSockets</li>
+        <li>🔒 Secure user authentication and session management</li>
+        <li>🌐 Interactive and mobile-responsive UI</li>
+        <li>🚪 Easy logout and account deletion options</li>
+      </ul>
+    </section>
+
+    <section class="section" id="how-to-use">
+      <h2>🛠️ How to Use</h2>
+      <ol>
+        <li>📝 Sign up with a unique username and password</li>
+        <li>🔓 Log in and access the live map</li>
+        <li>📍 Your location will appear on the map automatically</li>
+        <li>⚙️ Use the sidebar to navigate, access settings, help or logout</li>
+      </ol>
+    </section>
+
+    <section class="section" id="faq">
+      <h2>❓ Frequently Asked Questions</h2>
+      <p>
+        <strong>Q: Is my location data saved?</strong><br />A: 🚫 No! Your
+        location is only shared live and not stored anywhere.
+      </p>
+      <p>
+        <strong>Q: Can I use this on mobile?</strong><br />A: 📱 Absolutely! The
+        interface is responsive and works on all screen sizes.
+      </p>
+      <p>
+        <strong>Q: What if I want to delete my account?</strong><br />A: 🔥 Head
+        to the options menu in the sidebar and select 'Delete Account'.
+      </p>
+    </section>
+
+    <footer class="footer">
+      <p>
+        🌟 Built with ❤️ by Team WhereU | Need help? Reach us at
+        <a href="mailto:divyamjha30@gmail.com">divyamjha30@gmail.com</a>
+      </p>
+    </footer>
+
+    <script>
+      // Simple fade-in animation trigger
+      const sections = document.querySelectorAll(".section");
+      const options = {
+        threshold: 0.2,
+      };
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      }, options);
+
+      sections.forEach((section) => {
+        observer.observe(section);
+      });
+    </script>
+  </body>
+</html>

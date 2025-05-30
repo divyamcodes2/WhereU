@@ -20,20 +20,75 @@
       href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
   </head>
 
   <body>
-    <!-- Header -->
-    <header>📍 WhereU: Real-Time Tracker</header>
+    <!-- Mobile Header -->
+    <header class="mobile-header">📍 WhereU: Real-Time Tracker</header>
+    <header class="desktop-header">📍 WhereU: Real-Time Tracker</header>
 
-    <!-- Leaflet Map Container -->
+    <!-- Sidebar (Desktop Only) -->
+    <div class="sidebar">
+      <h3>👤 {{ session['username'] }}</h3>
+      <ul>
+        <li><a href="/tracker">Live Map</a></li>
+        <li class="dropdown" onclick="this.classList.toggle('open')">
+          <a href="#">Options ▼</a>
+          <div class="dropdown-content">
+            <a href="/help">Help</a>
+            <a href="/logout">Logout</a>
+            <a href="#" class="delete-link" onclick="openDeleteModal()"
+              >Delete Account</a
+            >
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Mobile Top Options -->
+    <div class="mobile-top-options">
+      <div class="mobile-username">👤 {{ session['username'] }}</div>
+      <a href="/tracker" class="mobile-link">Live Map</a>
+      <div
+        class="dropdown mobile-dropdown"
+        onclick="this.classList.toggle('open')"
+      >
+        <button class="dropdown-toggle">Options ▼</button>
+        <div class="dropdown-content">
+          <a href="/help">Help</a>
+          <a href="/logout">Logout</a>
+          <a href="#" class="delete-link" onclick="openDeleteModal()"
+            >Delete Account</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete Account Modal -->
+    <div id="deleteModal" class="modal">
+      <div class="modal-content">
+        <h2>⚠️ Delete Account</h2>
+        <p>Are you sure you want to permanently delete your account?</p>
+        <form action="/delete_account" method="POST">
+          <button type="submit" class="btn-danger">Yes, Delete</button>
+          <button type="button" class="btn-cancel" onclick="closeDeleteModal()">
+            Cancel
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Leaflet Map -->
     <div id="map"></div>
 
-    <!-- Floating Info Panel -->
+    <!-- Info Panel -->
     <div class="info-card" id="infoCard">⏳ Waiting for location...</div>
 
-    <!-- JS logic -->
+    <!-- Script -->
     <script src="{{ url_for('static', filename='script.js') }}"></script>
   </body>
 </html>
