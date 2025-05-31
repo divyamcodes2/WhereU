@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>📍 WhereU | Shared View</title>
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
+    <style>
+      body,
+      html {
+        margin: 0;
+        height: 100%;
+      }
+      #map {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <div id="initial-lat" style="display: none">
+      {{ last_location.lat if last_location else "" }}
+    </div>
+    <div id="initial-lon" style="display: none">
+      {{ last_location.lon if last_location else "" }}
+    </div>
+
+    <div id="shared-user" style="display: none">{{ shared_user }}</div>
+
+    <!-- Corrected script path -->
+    <script src="{{ url_for('static', filename='viewer.js') }}"></script>
+  </body>
+</html>

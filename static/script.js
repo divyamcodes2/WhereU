@@ -87,10 +87,41 @@ function updateLocation(position) {
 // Listen for 'location' events from the server.
 // This allows the app to receive real-time location data from other users (if multi-user).
 socket.on("location", (data) => {
-  if (data) {
-    // If location data is received from server, animate it and update the info card
-    animateMarker(data.lat, data.lon);
-    updateUI(data.lat, data.lon, data.accuracy || 0); // Use 0 if accuracy is undefined
+  if (!data || !data.username) return;
+
+  // Optional: Only display if this is the logged-in user's session
+  const currentUser = document
+    .querySelector("h3")
+    ?.innerText?.replace("👤 ", "");
+  const isSelf = data.username === currentUser;
+
+  // Show name above marker (optional)
+  if (!window.userMarkers) window.userMarkers = {};
+
+  const lat = data.lat;
+  const lon = data.lon;
+
+  if (!window.userMarkers[data.username]) {
+    const el = document.createElement("div");
+    el.className = "pulse";
+    el.style.width = "20px";
+    el.style.height = "20px";
+    el.style.background = isSelf ? "red" : "blue";
+    el.style.borderRadius = "50%";
+
+    const marker = L.marker([lat, lon], {
+      icon: L.divIcon({ className: "", html: el }),
+    }).addTo(map);
+
+    window.userMarkers[data.username] = marker;
+  } else {
+    window.userMarkers[data.username].setLatLng([lat, lon]);
+  }
+
+  if (isSelf) {
+    map.setView([lat, lon], 18);
+    animateMarker(lat, lon); // update trail
+    updateUI(lat, lon, data.accuracy || 0);
   }
 });
 

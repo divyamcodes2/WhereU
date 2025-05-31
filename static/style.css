@@ -218,12 +218,11 @@ header {
 .delete-link {
   color: red;
   font-weight: 500;
-  text-decoration: none;
-  font-size: 1.1rem;
-  padding: 10px 15px;
-  border-radius: 8px;
-  transition: background 0.3s ease, color 0.3s ease;
-  display: block;
+  font-size: 1rem;
+  padding: 0;
+  border: none;
+  background: none;
+  display: inline;
 }
 
 .delete-link:hover {
@@ -482,4 +481,42 @@ header {
   .desktop-header {
     display: none;
   }
+}
+.dropdown-content a {
+  padding: 8px 12px;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+.dropdown-content {
+  display: none;
+  flex-direction: column;
+  align-items: center; /* ✅ Center the content */
+  padding-left: 0;
+  margin-top: 10px;
+  gap: 10px;
+}
+
+.dropdown.open .dropdown-content {
+  display: flex;
+  animation: fadeIn 0.4s ease-in-out forwards;
+}
+
+.dropdown-content a {
+  padding: 8px 12px;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  justify-content: center; /* ✅ Center icon + text horizontally */
+  width: 100%; /* Optional: full width button-like */
+}
+
+.dropdown-content a:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #00c6ff;
+  border-radius: 8px;
 }

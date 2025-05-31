@@ -18,6 +18,7 @@ from flask_pymongo import PyMongo
 # OS module to access environment variables, secrets for secure key generation
 import os
 import secrets
+import uuid
 
 
 # === App Configuration ===
@@ -56,6 +57,7 @@ def index():
         flash('🚫 Please sign up to access the app.', 'warning')
         return redirect('/signup')
 
+
 @app.route('/help')
 def help():
     return render_template('help.html')
@@ -75,15 +77,23 @@ def tracker():
 
 @socketio.on('location')
 def handle_location(data):
-    """
-    SocketIO event handler.
-    - Listens for 'location' events from clients.
-    - Broadcasts received location data to all connected clients.
+    if 'username' in session:
+        enriched_data = {
+            'username': session['username'],
+            'lat': data['lat'],
+            'lon': data['lon'],
+            'accuracy': data.get('accuracy'),
+            'timestamp': data.get('timestamp', None)
+        }
 
-    Parameters:
-    - data (dict): Should contain 'latitude' and 'longitude'.
-    """
-    emit('location', data, broadcast=True)
+        # ✅ Store latest location in DB
+        mongo.db.latest_locations.update_one(
+            {'username': session['username']},
+            {'$set': enriched_data},
+            upsert=True
+        )
+
+        emit('location', enriched_data, broadcast=True)
 
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -152,6 +162,47 @@ def logout():
     session.clear()
     flash('👋 You have been logged out successfully.', 'info')
     return redirect('/signup')
+
+
+@app.route('/share')
+def share_location():
+    if 'username' not in session:
+        return redirect('/login')
+
+    # This line generates a random UUID(Universally Unique Identifier) using the uuid.uuid4() function.
+    # The uuid4() function generates a random UUID that is very unlikely to collide with other UUIDs.
+    # The [:12] slice is used to extract the first 12 characters of the UUID string, which will be used as a short share link.
+    share_id = str(uuid.uuid4())[:12]
+
+    # This line inserts a new document into the shared collection in the MongoDB database using the insert_one method.
+    # The document contains three fields: username, share_id, and active.
+    mongo.db.shared.insert_one({
+        'username': session['username'],
+        'share_id': share_id,
+        'active': True
+    })
+
+    share_url = f"{request.host_url}view/{share_id}"
+    return render_template('share.html', share_url=share_url)
+
+
+# Route for the viewer (Read only map)
+
+# This line defines a new route for the Flask application, which will respond to HTTP requests to the /view/<share_id> URL.
+# The <share_id> part is a variable rule, which means that Flask will capture the value of the share_id parameter from the URL and pass it to the view_shared_location function as an argument.
+
+
+@app.route('/view/<share_id>')
+def view_shared_location(share_id):
+    shared = mongo.db.shared.find_one({'share_id': share_id, 'active': True})
+    if not shared:
+        return "🚫 Invalid share link.", 404
+
+    # ✅ Fetch last known location of the shared user
+    last_location = mongo.db.latest_locations.find_one(
+        {'username': shared['username']})
+
+    return render_template('view_map.html', shared_user=shared['username'], last_location=last_location)
 
 
 @app.route('/delete_account', methods=['POST'])

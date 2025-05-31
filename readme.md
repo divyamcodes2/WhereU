@@ -37,6 +37,10 @@ Crafted with modern UI/UX magic 🪄, secure authentication 🔐, and blazing-fa
 - Bi-directional WebSocket power 💬
 - Scalable architecture with broadcast-based updates
 
+👾 **Share Your Location via Link**
+
+- Select the share your location option and copy the link and send it to anyone.
+
 ---
 
 ## 🔐 Authentication Flow

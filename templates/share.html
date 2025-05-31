@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>🔗 Share Your Live Location</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='share.css') }}"
+    />
+  </head>
+  <body>
+    <div class="card">
+      <div class="emoji">📍🎉🌐</div>
+      <h1>Your Live Location Link is Ready! 🚀</h1>
+      <div class="link-box" id="shareLink">{{ share_url }}</div>
+      <button class="copy-btn" id="copyBtn">📋 Copy Link</button>
+    </div>
+
+    <script>
+      const copyBtn = document.getElementById("copyBtn");
+      const shareLink = document.getElementById("shareLink").innerText;
+
+      copyBtn.addEventListener("click", () => {
+        navigator.clipboard.writeText(shareLink).then(() => {
+          copyBtn.innerHTML = "✅ Copied!";
+          copyBtn.style.backgroundColor = "#43a047"; // Optional: green background
+
+          setTimeout(() => {
+            copyBtn.innerHTML = "📋 Copy Link";
+            copyBtn.style.backgroundColor = "#ff6f00"; // Reset to original
+          }, 2000);
+        });
+      });
+    </script>
+  </body>
+</html>
