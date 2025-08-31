@@ -161,7 +161,7 @@ def logout():
     """
     session.clear()
     flash('👋 You have been logged out successfully.', 'info')
-    return redirect('/signup')
+    return redirect('/login')
 
 
 @app.route('/share')
